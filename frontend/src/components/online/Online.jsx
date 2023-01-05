@@ -1,4 +1,5 @@
 import "./online.css";
+const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
 export default function Online({user}) {
   return (
@@ -6,7 +7,7 @@ export default function Online({user}) {
         <div className="rightbarProfileImgContainer">
           <img
             className="rightbarProfileImg" 
-            src={user.profilePicture} 
+            src={PF + user.profilePicture} 
             alt=""
           />
           <span className="rightbarOnline"></span>
