@@ -1,7 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const helmet = require("helmet");
-const morgan = require("morgan"); //better debugging
+const morgan = require("morgan"); 
+const multer = require("multer");
+const path = require("path");
 //create new instance of express app
 const app = express();
 //allow using a .env file
@@ -23,7 +25,26 @@ const PORT = process.env.PORT || 8800;
 //setup middleware
 app.use(express.json());
 app.use(morgan("common"));
-app.use(helmet());
+app.use(helmet({ crossOriginResourcePolicy: false, }));
+app.use("/images", express.static(path.join(__dirname, "public/images")));
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/images");
+  },
+  filename: (req, file, cb) => {
+    cb(null, req.body.name);
+  },
+});
+
+const upload = multer({ storage: storage });
+app.post("/api/upload", upload.single("file"), (req, res) => {
+  try {
+    return res.status(200).json("File uploaded successfully.");
+  } catch(err) {
+    console.error(err);
+  }
+});
 
 //import routes
 const userRoute = require("./routes/users");

@@ -18,8 +18,8 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={ user ? <Home/> : <Register/> } />
-        <Route path="/login" element={ user ? <Navigate to="/" replace /> : <Login/> } />
-        <Route path="/register" element={ user ? <Navigate to="/" replace /> : <Register/> } />
+        <Route path="/login" element={ user ? <Navigate to="/" replace={true} /> : <Login/> } />
+        <Route path="/register" element={ user ? <Navigate to="/" replace={true} /> : <Register/> } />
         <Route path="/profile/:username" element={ <Profile/> } />
       </Routes>
     </Router>
